@@ -28,7 +28,7 @@ public class GameController {
                 response.status(201);
                 return player;
             } catch(GameService.GameServiceException ex){
-                response.status(500);
+                response.status(400);
                 logger.error("Failed to create new game", ex);
                 return Collections.EMPTY_MAP;
             }

@@ -10,13 +10,12 @@ public class GameState {
     private transient String  gameId;
     private transient GamePlayer p1, p2;
 
-    public GameState(String body) {
+    public GameState(String pieceType) {
         this.state = "WAITING_FOR_SECOND_PLAYER";
         this.whoseTurn = "HOUND";
 
         // set up first player
-		// Gson transforms the "pieceType" in "body" to the p1 object
-        this.p1 = new Gson().fromJson(body, GamePlayer.class);
+        this.p1.setPieceType(pieceType);
         String uniqueGameId = UUID.randomUUID().toString();
         String uniquePlayerId = UUID.randomUUID().toString();
 

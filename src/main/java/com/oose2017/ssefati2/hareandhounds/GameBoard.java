@@ -43,6 +43,16 @@ public class GameBoard {
         return false;
     }
 
+    // check for out of bounds x or y
+    public boolean isOutOfBound(int toX, int toY){
+        if (toX < 0 || toX > 4 || toY < 0 || toY > 2) {return true;}
+        if (toX == 0 && toY == 0) {return true;}
+        if (toX == 0 && toY == 2) {return true;}
+        if (toX == 4 && toY == 0) {return true;}
+        if (toX == 4 && toY == 2) {return true;}
+        return false;
+    }
+
     // initialize gameBoard
     public void initializeBoard() {
 

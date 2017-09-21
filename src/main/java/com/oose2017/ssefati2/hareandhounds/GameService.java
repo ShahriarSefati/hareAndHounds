@@ -22,7 +22,14 @@ public class GameService {
     public GamePlayer createNewGame(String body) throws GameServiceException {
         try{
             // initialize gameState and gameBoard
-            GameState gameState = new GameState(body);
+            PieceType pieceType = new Gson().fromJson(body, PieceType.class);
+
+            // check for invalid pieceType
+            if (!(pieceType.getPieceType().equals("HOUND")) && !(pieceType.getPieceType().equals("HARE"))) {
+                throw new GameServiceException("GameService.createNewGame: Improper pieceType:",1);
+            }
+
+            GameState gameState = new GameState(pieceType.getPieceType());
             GameBoard gameBoard = new GameBoard(gameState.getGameId());
 
             // store gameState and gameBoard (and their gameId's) in gamesList and boardsList
@@ -71,6 +78,11 @@ public class GameService {
         // illegal move to occupied slot
         if (boardsList.get(gameId).isOccupied(toX, toY)) {
                 throw new GameServiceException("GameService.playGame: Illegal move:", 4);
+        }
+
+        // illegal move to out of bounds x and y
+        if (boardsList.get(gameId).isOutOfBound(toX, toY)) {
+            throw new GameServiceException("GameService.playGame: Illegal move:", 4);
         }
 
         // update the board status for appropriate gameId
