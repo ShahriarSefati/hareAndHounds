@@ -63,22 +63,22 @@ public class GameController {
                     logger.error(String.format("Invalid game id: %s",
                             request.params(":gameId")));
                     response.status(404);
-                    response.body("INVALID_GAME_ID");
+                    response.body("{ reason: \"INVALID_GAME_ID\" }");
                 } else if (ex.getStatusCode() == 2) {
                     logger.error(String.format("Invalid player id: %s",
                             request.params(":gameId")));
                     response.status(404);
-                    response.body("INVALID_PLAYER_ID");
+                    response.body("{ reason: \"INVALID_PLAYER_ID\" }");
                 } else if (ex.getStatusCode() == 3) {
                     logger.error(String.format("It's not your turn: %s",
                             request.params(":gameId")));
                     response.status(422);
-                    response.body("INCORRECT_TURN");
+                    response.body("{ reason: \"INCORRECT_TURN\" }");
                 } else if (ex.getStatusCode() == 4) {
                     logger.error(String.format("Illegal move: %s",
                             request.params(":gameId")));
                     response.status(422);
-                    response.body("ILLEGAL_MOVE");
+                    response.body("{ reason: \"ILLEGAL_MOVE\" }");
                 }
                 return Collections.EMPTY_MAP;
             }
