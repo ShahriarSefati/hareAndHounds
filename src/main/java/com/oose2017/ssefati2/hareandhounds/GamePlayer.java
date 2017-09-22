@@ -3,8 +3,8 @@ package com.oose2017.ssefati2.hareandhounds;
 public class GamePlayer {
 
     private String pieceType;
-    private transient String gameId;
-    private transient String playerId;
+    private String gameId;
+    private String playerId;
 
 
     public GamePlayer(String gameId){

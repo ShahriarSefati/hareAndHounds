@@ -14,15 +14,15 @@ public class GameState {
         this.state = "WAITING_FOR_SECOND_PLAYER";
         this.whoseTurn = "HOUND";
 
-        // set up first player
-        this.p1.setPieceType(pieceType);
         String uniqueGameId = UUID.randomUUID().toString();
         String uniquePlayerId = UUID.randomUUID().toString();
 
-        // setting gameId and playerId for p1
-        this.p1.setGameId(uniqueGameId);
+        // set up first player
+        p1 = new GamePlayer(uniqueGameId);
+
+        this.p1.setPieceType(pieceType);
         this.p1.setPlayerId(uniquePlayerId);
-        this.gameId = this.p1.getGameId();
+        this.gameId = p1.getGameId();
     }
 
     public String getState() {

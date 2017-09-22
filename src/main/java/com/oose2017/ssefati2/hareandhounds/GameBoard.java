@@ -140,4 +140,6 @@ public class GameBoard {
         }
         return "No Winner";
     }
+
+    public String getGameId(){return gameId;}
 }
