@@ -88,6 +88,21 @@ public class GameService {
             throw new GameServiceException("GameService.playGame: Illegal move:", 4);
         }
 
+        // illegal disconnected cell movements (both hare and hounds)
+        if (Math.abs(fromX - toX) <= 1 && Math.abs(fromY - toY) > 1){
+            throw new GameServiceException("GameService.playGame: Illegal move:", 4);
+        }
+
+        // illegal disconnected cell movements (both hare and hounds)
+        if (Math.abs(fromY - toY) <= 1 && Math.abs(fromX - toX) > 1){
+            throw new GameServiceException("GameService.playGame: Illegal move:", 4);
+        }
+
+        // illegal disconnected cell movements (both hare and hounds)
+        if (areDisconnected(fromX, fromY, toX, toY)){
+            throw new GameServiceException("GameService.playGame: Illegal move:", 4);
+        }
+
         // illegal movements of hound
         if (gamesList.get(gameId).getTurn().equals("HOUND")) {
             if (fromX > toX) {
@@ -118,6 +133,18 @@ public class GameService {
         return playerId;
     }
 
+    public boolean areDisconnected(int fromX, int fromY, int toX, int toY){
+        if(fromX == 2 && fromY == 0 && toX == 1 && toY == 1) {return true;}
+        if(fromX == 1 && fromY == 1 && toX == 2 && toY == 0) {return true;}
+        if(fromX == 2 && fromY == 0 && toX == 3 && toY == 1) {return true;}
+        if(fromX == 3 && fromY == 1 && toX == 2 && toY == 0) {return true;}
+        if(fromX == 2 && fromY == 2 && toX == 1 && toY == 1) {return true;}
+        if(fromX == 1 && fromY == 1 && toX == 2 && toY == 2) {return true;}
+        if(fromX == 2 && fromY == 2 && toX == 3 && toY == 1) {return true;}
+        if(fromX == 3 && fromY == 1 && toX == 2 && toY == 2) {return true;}
+
+        return false;
+    }
     // Join a game as second player
     public GamePlayer joinGame(String gameId) throws GameServiceException {
         if (gamesList.get(gameId) == null) {
