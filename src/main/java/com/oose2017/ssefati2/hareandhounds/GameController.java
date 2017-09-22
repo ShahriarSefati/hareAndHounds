@@ -1,5 +1,6 @@
 package com.oose2017.ssefati2.hareandhounds;
 
+import com.google.gson.JsonObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,28 +60,36 @@ public class GameController {
                 response.status(200);
                 return playerId;
             } catch (GameService.GameServiceException ex) {
+                JsonObject responseBody = new JsonObject();
                 if (ex.getStatusCode() == 1) {
                     logger.error(String.format("Invalid game id: %s",
                             request.params(":gameId")));
                     response.status(404);
-                    response.body("{ reason: \"INVALID_GAME_ID\" }");
+                    responseBody.addProperty("reason", "INVALID_GAME_ID");
+//                    response.body("{ reason: \"INVALID_GAME_ID\" }");
                 } else if (ex.getStatusCode() == 2) {
                     logger.error(String.format("Invalid player id: %s",
                             request.params(":gameId")));
                     response.status(404);
-                    response.body("{ reason: \"INVALID_PLAYER_ID\" }");
+//                    response.body("{ reason: \"INVALID_PLAYER_ID\" }");
+                    responseBody.addProperty("reason", "INVALID_PLAYER_ID");
                 } else if (ex.getStatusCode() == 3) {
                     logger.error(String.format("It's not your turn: %s",
                             request.params(":gameId")));
                     response.status(422);
-                    response.body("{ reason: \"INCORRECT_TURN\" }");
+//                    response.body("{ reason: \"INCORRECT_TURN\" }");
+                    responseBody.addProperty("reason", "INCORRECT_TURN");
                 } else if (ex.getStatusCode() == 4) {
                     logger.error(String.format("Illegal move: %s",
                             request.params(":gameId")));
                     response.status(422);
-                    response.body("{ reason: \"ILLEGAL_MOVE\" }");
+//                    response.body("{ reason: ILLEGAL_MOVE\" }");
+                    responseBody.addProperty("reason", "ILLEGAL_MOVE");
                 }
-                return Collections.EMPTY_MAP;
+//                System.out.println(response);
+//
+//                System.out.println(response.body());
+                return responseBody;
             }
         }, new JsonTransformer());
 
