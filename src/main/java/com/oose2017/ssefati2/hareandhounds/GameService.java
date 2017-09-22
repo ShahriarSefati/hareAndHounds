@@ -60,13 +60,19 @@ public class GameService {
 
         if (gamesList.get(gameId) == null) {
             throw new GameServiceException(String.format("GameService.playGame: invalid game id: %s", gameId), 1);
+        }
 
-        } else if (!(gamesList.get(gameId).getFirstPlayerId().equals(playerId)) &&
+        if (!(gamesList.get(gameId).getFirstPlayerId().equals(playerId)) &&
                 !(gamesList.get(gameId).getSecondPlayerId().equals(playerId))) {
             throw new GameServiceException(String.format("GameService.playGame: Invalid player id: %s", playerId), 2);
+        }
 
-        } else if(!(gamesList.get(gameId).getTurnPlayerId().equals(playerId))) {
+        if(!(gamesList.get(gameId).getTurnPlayerId().equals(playerId))) {
                 throw new GameServiceException("GameService.playGame: It's not your turn!", 3);
+        }
+
+        if(gamesList.get(gameId).getState().equals("WAITING_FOR_SECOND_PLAYER")) {
+            throw new GameServiceException("GameService.playGame: Waiting for second player!", 3);
         }
 
         // check illegal movements
