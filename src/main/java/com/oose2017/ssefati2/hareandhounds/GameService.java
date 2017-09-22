@@ -24,24 +24,19 @@ public class GameService {
             // initialize gameState and gameBoard
             PieceType pieceType = new Gson().fromJson(body, PieceType.class);
 
-//            // check for invalid pieceType
+            // check for invalid pieceType
             if (!(pieceType.getPieceType().equals("HOUND")) && !(pieceType.getPieceType().equals("HARE"))) {
                 throw new GameServiceException("GameService.createNewGame: Improper pieceType:",1);
             }
 
             GameState gameState = new GameState(pieceType.getPieceType());
-//            System.out.printf("game Id from state SERVICE: %s\n", gameState.getGameId());
-//            System.out.printf("player Id from state SERVICE: %s\n", gameState.getFirstPlayerId());
             GameBoard gameBoard = new GameBoard(gameState.getGameId());
-//            System.out.printf("game Id from board SERVICE: %s\n", gameBoard.getGameId());
+
 
             // store gameState and gameBoard (and their gameId's) in gamesList and boardsList
             gamesList.put(gameState.getGameId(), gameState);
             boardsList.put(gameState.getGameId(), gameBoard);
-//            System.out.printf("game Id from player SERVICE: %s\n", gamesList.get(gameState.getGameId()).getFirstPlayer().getGameId());
-//            System.out.printf("player Id from player SERVICE: %s\n", gamesList.get(gameState.getGameId()).getFirstPlayer().getPlayerId());
-//            System.out.printf("player Id from player SERVICE (diff): %s\n", gamesList.get(gameState.getGameId()).getFirstPlayerId());
-//            System.out.printf("type from player SERVICE: %s\n", gamesList.get(gameState.getGameId()).getFirstPlayer().getPieceType());
+
             return gamesList.get(gameState.getGameId()).getFirstPlayer();
         } catch(Exception ex) {
             logger.error("GameService.createNewGame: Failed to create new game", ex);

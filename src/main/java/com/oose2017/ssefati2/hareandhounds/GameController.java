@@ -66,29 +66,22 @@ public class GameController {
                             request.params(":gameId")));
                     response.status(404);
                     responseBody.addProperty("reason", "INVALID_GAME_ID");
-//                    response.body("{ reason: \"INVALID_GAME_ID\" }");
                 } else if (ex.getStatusCode() == 2) {
                     logger.error(String.format("Invalid player id: %s",
                             request.params(":gameId")));
                     response.status(404);
-//                    response.body("{ reason: \"INVALID_PLAYER_ID\" }");
                     responseBody.addProperty("reason", "INVALID_PLAYER_ID");
                 } else if (ex.getStatusCode() == 3) {
                     logger.error(String.format("It's not your turn: %s",
                             request.params(":gameId")));
                     response.status(422);
-//                    response.body("{ reason: \"INCORRECT_TURN\" }");
                     responseBody.addProperty("reason", "INCORRECT_TURN");
                 } else if (ex.getStatusCode() == 4) {
                     logger.error(String.format("Illegal move: %s",
                             request.params(":gameId")));
                     response.status(422);
-//                    response.body("{ reason: ILLEGAL_MOVE\" }");
                     responseBody.addProperty("reason", "ILLEGAL_MOVE");
                 }
-//                System.out.println(response);
-//
-//                System.out.println(response.body());
                 return responseBody;
             }
         }, new JsonTransformer());
@@ -119,15 +112,5 @@ public class GameController {
             }
         }, new JsonTransformer());
 
-    }
-
-    //-----------------------------------------------------------------------------//
-    // Helper Classes and Methods
-    //-----------------------------------------------------------------------------//
-
-    public static class HareHoundsControllerException extends Exception {
-        public HareHoundsControllerException(String message, Throwable cause) {
-            super(message, cause);
-        }
     }
 }
