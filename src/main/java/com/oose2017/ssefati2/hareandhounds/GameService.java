@@ -76,6 +76,13 @@ public class GameService {
         }
 
         // check illegal movements
+        // movement after winning situation
+        if (gamesList.get(gameId).getState().equals("WIN_HARE_BY_STALLING") ||
+                gamesList.get(gameId).getState().equals("WIN_HARE_BY_ESCAPE") ||
+                gamesList.get(gameId).getState().equals("WIN_HOUND")){
+            throw new GameServiceException("GameService.playGame: Illegal move:", 4);
+        }
+
         // illegal large step movements (both hare and hounds)
         if (Math.abs(fromX - toX) > 1 || Math.abs(fromY - toY) > 1){
             throw new GameServiceException("GameService.playGame: Illegal move:", 4);
